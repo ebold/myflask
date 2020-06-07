@@ -6,24 +6,24 @@ import os, json
 app = Flask(__name__)
  
 poll_data = {
+   'greeting' : '"Сонгууль 2020" асуулгад тавтай морилно уу',
    'question' : 'Та сонголтоо хийнэ үү?',
    'fields'   : ['С.Баяр', 'Х.Номтойбаяр', 'Н.Энхбаяр', 'Б.Эрдэнэбаяр', 'үгүй']
 }
 
 result_filename = 'result.txt'
 list_filename = 'list.json'
+all_candidates = {}
+
+with open(list_filename, 'r') as f:
+    all_candidates = json.load(f)
 
 @app.route('/')
 def root():
-    with open(list_filename, 'r') as f:
-        all_candidates = json.load(f)
-    
-    candidates = all_candidates['29']['candidates']
-    cand_names = []
-    for item in candidates:
-        cand_names.append(item['name'])
+    poll_data['constituencies'] = all_candidates.keys()
+        
+    return render_template('hello.html', data=poll_data)
 
-    poll_data['fields'] = cand_names
         
     return render_template('poll.html', data=poll_data)
 

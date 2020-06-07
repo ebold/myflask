@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Songuuli 2020</title>
+</head>
+<body>
+<h1>{{ data.greeting }}</h1>
+<form action="/hello">
+  <label for="username">Таны нэр: </label>
+  <input type="text" id="username" name="username"><br>
+  <label for="constituency">Таны тойрог: </label>
+  <select id="constituency" name="constituency">
+  {% for e in data.constituencies %}
+     <option value="{{e}}"> {{ e }} </option>
+  {% endfor %}
+  </select>
+  <input type="submit" value="Сонгох" />
+</form>
+</body>
+</html>
