@@ -6,8 +6,8 @@
 <body>
 <h1>{{ data.question }}</h1>
 <form action="/poll">
-  {% for e in data.fields %}
-     <input type="radio" name="field" value="{{ e }}"> {{ e }}<br>
+  {% for e in data.candidates %}
+     <input type="checkbox" id="{{e.idx}}" name="field" value="{{ e.idx }}"> {{ e.name }} - {{ e.party }}<br>
   {% endfor %}
   <input type="submit" value="Илгээх" />
 </form>
