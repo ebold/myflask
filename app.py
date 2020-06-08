@@ -35,7 +35,10 @@ def hello():
     constituency = request.args.get('constituency')
 
     poll_data['candidates'] = all_candidates[constituency]['candidates']
-        
+    poll_data['mandates'] = all_candidates[constituency]['mandates']
+    poll_data['province'] = all_candidates[constituency]['province']
+    poll_data['constituency'] = constituency
+
     return render_template('poll.html', data=poll_data)
 
 @app.route('/poll')

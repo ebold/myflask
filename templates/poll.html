@@ -5,6 +5,9 @@
 </head>
 <body>
 <h1>{{ data.question }}</h1>
+<h3> Тойргийн дугаар: {{ data.constituency  }}</h3>
+<h3> Тойргийн нэр: {{ data.province }}</h3>
+<h3> Мандатын тоо: {{ data.mandates }}</h3>
 <form action="/poll">
   {% for e in data.candidates %}
      <input type="checkbox" id="{{e.idx}}" name="field" value="{{ e.idx }}"> {{ e.name }} - {{ e.party }}<br>
