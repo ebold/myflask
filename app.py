@@ -20,8 +20,14 @@ with open(list_filename, 'r') as f:
 
 @app.route('/')
 def root():
-    poll_data['constituencies'] = all_candidates.keys()
         
+    constituencies = []
+    for i in all_candidates:
+        c = {'number': i, 'province': all_candidates[i]['province']}
+        constituencies.append(c)
+
+    poll_data['constituencies'] = constituencies
+
     return render_template('hello.html', data=poll_data)
 
 @app.route('/hello')

@@ -11,7 +11,7 @@
   <label for="constituency">Таны тойрог: </label>
   <select id="constituency" name="constituency">
   {% for e in data.constituencies %}
-     <option value="{{e}}"> {{ e }} </option>
+     <option value="{{e.number}}"> {{ e.number }} - {{ e.province }} </option>
   {% endfor %}
   </select><br/>
   <input type="submit" value="Нэвтрэх" />
