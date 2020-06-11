@@ -127,16 +127,17 @@ def poll():
 
 @app.route('/results')
 def show_results():
-    votes = {}
-    for f in poll_data['fields']:
-        votes[f] = 0
+    # get results
+    results = {}    
+    with open(result_filename, 'r') as f:
+        results = json.load(f)
 
-    f  = open(result_filename, 'r')
-    for line in f:
-        vote = line.rstrip("\n")
-        votes[vote] += 1
+    # show results
+    results_data = {}
+    results_data['title'] = poll_data['title']
+    results_data['votes'] = results
 
-    return render_template('results.html', data=poll_data, votes=votes)
+    return render_template('results.html', data=results_data, candidates=all_candidates)
 
 if __name__ == "__main__":
     app.run(debug=True)
