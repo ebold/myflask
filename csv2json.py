@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 # python 3.8
 
+'''Add '#coding=utf-8' line if you encounter a similar error given below:
+
+'SyntaxError: Non-ASCII character '\xd1' in file csv2json.py on line 53, but no encoding declared; see http://python.org/dev/peps/pep-0263/ for details'''
+
 import json, re
 
 '''
