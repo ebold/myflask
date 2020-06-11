@@ -83,8 +83,11 @@ def poll():
             your_votes[request.args[k]] = 1
 
     mandates = request.args.get('mandates')
-    '''if request.args.get('mandates') != len(your_votes)
-        return render_template('revote.html')'''
+    if int(mandates) != len(your_votes):
+        error_data = {}
+        error_data['title'] = poll_data['title']
+        error_data['mandates'] = mandates
+        return render_template('error.html', data=error_data)
 
     # get previous result
     result = {}    
