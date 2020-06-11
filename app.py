@@ -6,7 +6,7 @@ import os, json
 app = Flask(__name__)
  
 poll_data = {
-   'greeting' : '"Сонгууль 2020" санал асуулга',
+   'title' : '"Сонгууль 2020" санал асуулга',
    'question' : 'Та сонголтоо хийнэ үү?',
    'fields'   : ['С.Баяр', 'Х.Номтойбаяр', 'Н.Энхбаяр', 'Б.Эрдэнэбаяр', 'үгүй']
 }
@@ -114,7 +114,7 @@ def poll():
         if key in your_votes:
             result_data['votes'].append({'idx': c['idx'], 'name': c['name'], 'party': c['party']})
 
-    result_data['title'] = poll_data['greeting']
+    result_data['title'] = poll_data['title']
     result_data['constituency'] = constituency
     result_data['province'] = all_candidates[constituency]['province']
 
