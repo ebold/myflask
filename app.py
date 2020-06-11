@@ -21,7 +21,7 @@ all_candidates = {}
         'number' :
                 'province' : 'A',
                 'mandates' : '3',
-                'candidates' : [ {'idx' : i, 'name' : 'B', 'party': 'C'}, {...}, ...],
+                'candidates' : [ {'idx' : 'i', 'name' : 'B', 'party': 'C'}, {...}, ...],
         ...
                 
     }
@@ -110,8 +110,7 @@ def poll():
 
     candidates = all_candidates[constituency]['candidates']
     for c in candidates:
-        key = str(c['idx'])
-        if key in your_votes:
+        if c['idx'] in your_votes:
             result_data['votes'].append({'idx': c['idx'], 'name': c['name'], 'party': c['party']})
 
     result_data['title'] = poll_data['title']

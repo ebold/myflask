@@ -59,7 +59,7 @@ with open(csv_file, 'r') as f:
             print (const_idx, province, mandates)
             cand_idx += 1
             candidates = []
-            candidates.append({'idx': cand_idx, 'name': cand_name, 'party': cand_party})
+            candidates.append({'idx': str(cand_idx), 'name': cand_name, 'party': cand_party})
 
             all_candidates[const_idx] = {}
             all_candidates[const_idx]['province'] = province
@@ -69,7 +69,7 @@ with open(csv_file, 'r') as f:
         # a line contains only candidate name and party
         else:
             cand_idx += 1
-            all_candidates[const_idx]['candidates'].append({'idx': cand_idx, 'name': cand_name, 'party': cand_party})
+            all_candidates[const_idx]['candidates'].append({'idx': str(cand_idx), 'name': cand_name, 'party': cand_party})
 
 
     print(all_candidates)
