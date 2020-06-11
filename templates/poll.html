@@ -10,8 +10,10 @@
 <h3> Мандатын тоо: {{ data.mandates }}</h3>
 <form action="/poll">
   {% for e in data.candidates %}
-     <input type="checkbox" id="{{e.idx}}" name="field" value="{{ e.idx }}"> {{ e.name }} - {{ e.party }}<br>
+     <input type="checkbox" id="{{e.idx}}" name="field{{ e.idx }}" value="{{ e.idx }}"> {{ e.name }} - {{ e.party }}<br>
   {% endfor %}
+     <input type="hidden" name="mandates" value="{{ data.mandates }}">
+     <input type="hidden" name="constituency" value="{{ data.constituency }}">
   <input type="submit" value="Илгээх" />
 </form>
 </body>

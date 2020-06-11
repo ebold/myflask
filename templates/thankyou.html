@@ -1,10 +1,32 @@
 <!doctype html>
 <html>
 <head>
-<title>{{ data.question }}</title>
+<title>{{ data.title }}</title>
 </head>
 <body>
-<h1></h1>
-Сонголтоо хийсэнд баярлалаа.
+<h3>Таны сонголт мэргэн байх болтугай.</h3>
+
+Тойргийн дугаар: <b>{{ data.constituency  }}</b><br>
+Тойргийн нэр: <b>{{ data.province }}</b><br>
+
+<ul>
+{% for e in data.votes %}
+  <li><b>{{ e.name }}</b> - {{ e.party }}</li>
+{% endfor %}
+</ul>
+
+<h4>Санал хураалтын үр дүнг харах:</h4>
+
+<form action="/results_constit">
+  <label for="results_constit">Тухайн тойрог -> </label>
+  <input type="hidden" name="constituency" value="{{ data.constituency }}">
+  <input type="submit" value="энд дар" />
+</form>
+<br>
+<form action="/results">
+  <label for="results_constit">Бүх тойрог -> </label>
+  <input type="submit" value="энд дар" />
+</form>
+
 </body>
 </html>

@@ -11,9 +11,35 @@ poll_data = {
    'fields'   : ['С.Баяр', 'Х.Номтойбаяр', 'Н.Энхбаяр', 'Б.Эрдэнэбаяр', 'үгүй']
 }
 
-result_filename = 'result.txt'
+result_filename = 'result.json'
 list_filename = 'list.json'
 all_candidates = {}
+
+'''
+    list.json
+    {
+        'number' :
+                'province' : 'A',
+                'mandates' : '3',
+                'candidates' : [ {'idx' : i, 'name' : 'B', 'party': 'C'}, {...}, ...],
+        ...
+                
+    }
+'''
+
+'''
+    result.json
+    {
+        'number' :
+                'idx' : votes,
+                'idx' : votes,
+        ...
+                
+    }
+'''
+
+with open(result_filename, 'w') as f:
+    f.write(json.dumps(all_candidates))
 
 with open(list_filename, 'r') as f:
     all_candidates = json.load(f)
@@ -43,13 +69,56 @@ def hello():
 
 @app.route('/poll')
 def poll():
-    vote = request.args.get('field')
 
-    out = open(result_filename, 'a')
-    out.write( vote + '\n' )
-    out.close()
+    # evaluate request
+    your_votes = {}
+    for k in request.args.keys():
+        if 'field' in k:
+            your_votes[request.args[k]] = 1
 
-    return render_template('thankyou.html', data=poll_data)
+    mandates = request.args.get('mandates')
+    '''if request.args.get('mandates') != len(your_votes)
+        return render_template('revote.html')'''
+
+    # get previous result
+    result = {}    
+    with open(result_filename, 'r') as f:
+        result = json.load(f)
+
+    total_votes = {}
+    constituency = request.args.get('constituency')
+    if constituency in result:
+        total_votes = result[constituency]
+        for c in your_votes:
+            if c in total_votes:
+                total_votes[c] = total_votes[c] + your_votes[c]
+            else:
+                total_votes[c] = your_votes[c]
+    else:
+        for c in your_votes:
+            total_votes[c] = your_votes[c]
+
+    # update result
+    result[constituency] = total_votes
+
+    with open(result_filename, 'w') as f:
+        f.write(json.dumps(result))
+
+    # show result
+    result_data = {}
+    result_data['votes'] = []
+
+    candidates = all_candidates[constituency]['candidates']
+    for c in candidates:
+        key = str(c['idx'])
+        if key in your_votes:
+            result_data['votes'].append({'idx': c['idx'], 'name': c['name'], 'party': c['party']})
+
+    result_data['title'] = poll_data['greeting']
+    result_data['constituency'] = constituency
+    result_data['province'] = all_candidates[constituency]['province']
+
+    return render_template('thankyou.html', data=result_data)
 
 @app.route('/results')
 def show_results():
