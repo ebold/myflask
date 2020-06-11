@@ -139,5 +139,30 @@ def show_results():
 
     return render_template('results.html', data=results_data, candidates=all_candidates)
 
+@app.route('/results_constit')
+def show_constituency_results():
+    # get a constituency from HTTP request
+    constituency = request.args['constituency']
+    
+    # get all results
+    results = {}    
+    with open(result_filename, 'r') as f:
+        results = json.load(f)
+
+    # get poll results of a given constituency
+    results_data = {}
+    results_data['title'] = poll_data['title']
+    results_data['votes'] = {}
+    results_data['votes'][constituency] = results[constituency]
+
+    # get candidates of a given constituency
+    constit_data = {}
+    constit_data[constituency] = {}
+    constit_data[constituency]['province'] = all_candidates[constituency]['province']
+    constit_data[constituency]['mandates'] = all_candidates[constituency]['mandates']
+    constit_data[constituency]['candidates'] = all_candidates[constituency]['candidates']
+
+    return render_template('results.html', data=results_data, candidates=constit_data)
+
 if __name__ == "__main__":
     app.run(debug=True)
