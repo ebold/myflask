@@ -41,14 +41,14 @@ all_candidates = {}
 with open(list_filename, 'r') as f:
     all_candidates = json.load(f)
 
-with open(result_filename, 'w') as f:
+'''with open(result_filename, 'w') as f:
     results = {}
     for constituency in all_candidates:
         results[constituency] = {}
         candidates = all_candidates[constituency]['candidates']
         for c in candidates:
             results[constituency][c['idx']] = 0
-    f.write(json.dumps(results))
+    f.write(json.dumps(results))'''
 
 @app.route('/')
 def root():
