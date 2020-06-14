@@ -2,20 +2,14 @@
 <html>
 <head>
 <title>{{ data.title }}</title>
+<script src='static/sort.min.js'></script>
 </head>
 <body>
 <h1>Үр дүн</h1>
 
-<ul>
-{% for e in candidates %}
-  <li>{{ e }} -р тойрог, {{ candidates[e].province }}</li>
-  <ul>
-  {% for v in data.votes[e] %}
-    <li>{{ data.votes[e][v] }} - {{ candidates[e].candidates[v].name }}, {{ candidates[e].candidates[v].party }} </li>
-  {% endfor %}
-  </ul>
-{% endfor %}
-</ul>
+<script>
+makeSortedUL({{ data|safe }}, {{ candidates|safe }});
+</script>
 
 </body>
 </html>
