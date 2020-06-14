@@ -24,7 +24,9 @@ all_candidates = {}
         'number' :
                 'province' : 'A',
                 'mandates' : '3',
-                'candidates' : [ {'idx' : 'i', 'name' : 'B', 'party': 'C'}, {...}, ...],
+                'candidates' : 
+                    'idx' : {'name' : 'B', 'party': 'C'},
+                    'idx' : {'name' : 'B', 'party': 'C'},
         ...
                 
     }
@@ -50,7 +52,7 @@ with open(list_filename, 'r') as f:
         results[constituency] = {}
         candidates = all_candidates[constituency]['candidates']
         for c in candidates:
-            results[constituency][c['idx']] = 0
+            results[constituency][c] = 0
     f.write(json.dumps(results))'''
 
 @app.route('/')
@@ -122,8 +124,8 @@ def poll():
 
     candidates = all_candidates[constituency]['candidates']
     for c in candidates:
-        if c['idx'] in your_votes:
-            result_data['votes'].append({'idx': c['idx'], 'name': c['name'], 'party': c['party']})
+        if c in your_votes:
+            result_data['votes'].append({'idx': c, 'name': candidates[c]['name'], 'party': candidates[c]['party']})
 
     result_data['title'] = poll_data['title']
     result_data['constituency'] = constituency

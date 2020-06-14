@@ -10,8 +10,8 @@
 {% for e in candidates %}
   <li>{{ e }} -р тойрог, {{ candidates[e].province }}</li>
   <ul>
-  {% for c in candidates[e].candidates %}
-    <li>{{ data.votes[e][c.idx] }} - {{ c.name }}, {{ c. party }} </li>
+  {% for v in data.votes[e] %}
+    <li>{{ data.votes[e][v] }} - {{ candidates[e].candidates[v].name }}, {{ candidates[e].candidates[v].party }} </li>
   {% endfor %}
   </ul>
 {% endfor %}
