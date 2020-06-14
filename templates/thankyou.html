@@ -11,7 +11,7 @@
 
 <ul>
 {% for e in data.votes %}
-  <li><b>{{ e.name }}</b> - {{ e.party }}</li>
+  <li><b>{{ candidates[e].name }}</b> - {{ candidates[e].party }}</li>
 {% endfor %}
 </ul>
 
