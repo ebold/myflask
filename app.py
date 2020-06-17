@@ -56,6 +56,10 @@ with open(list_filename, 'r') as f:
     f.write(json.dumps(results))'''
 
 @app.route('/')
+def redirect():
+    return render_template('redirect.html', data=poll_data)
+
+@app.route('/huuchin')
 def root():
         
     constituencies = []
