@@ -124,12 +124,18 @@ def poll():
 
     # show result
     result_data = {}
+    result_data['votes'] = []
+
+    candidates = all_candidates[constituency]['candidates']
+    for c in candidates:
+        if c in your_votes:
+            result_data['votes'].append({'idx': c, 'name': candidates[c]['name'], 'party': candidates[c]['party']})
+
     result_data['title'] = poll_data['title']
     result_data['constituency'] = constituency
     result_data['province'] = all_candidates[constituency]['province']
-    result_data['votes'] = your_votes
 
-    return render_template('thankyou.html', data=result_data, candidates=all_candidates[constituency]['candidates'])
+    return render_template('thankyou.html', data=result_data)
 
 @app.route('/results')
 def show_results():
