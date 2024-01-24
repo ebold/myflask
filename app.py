@@ -16,6 +16,7 @@ poll_data = {
 
 result_filename = 'result.json'
 list_filename = 'list.json'
+result_2020_filename = 'result_2020.json'
 all_candidates = {}
 
 '''
@@ -171,6 +172,21 @@ def show_constituency_results():
     constit_data[constituency]['candidates'] = all_candidates[constituency]['candidates']
 
     return render_template('results.html', data=results_data, candidates=constit_data)
+
+@app.route('/result_2020')
+def show_result_2020():
+    # read votes from an external file
+    results = {}
+    with open(result_2020_filename, 'r') as f:
+       results = json.load(f)
+
+    # prepare data
+    results_data = {}
+    results_data['title'] = '2020 results'
+    results_data['votes'] = results
+
+    # render HTML
+    return render_template('result_2020.html', data=results_data, candidates=all_candidates)
 
 if __name__ == "__main__":
     app.run(debug=True)
