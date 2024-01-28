@@ -11,7 +11,9 @@ app = Flask(__name__)
 poll_data = {
    'title' : '"Сонгууль 2020" санал асуулга',
    'question' : 'Та сонголтоо хийнэ үү?',
-   'fields'   : ['С.Баяр', 'Х.Номтойбаяр', 'Н.Энхбаяр', 'Б.Эрдэнэбаяр', 'үгүй']
+   'fields'   : ['С.Баяр', 'Х.Номтойбаяр', 'Н.Энхбаяр', 'Б.Эрдэнэбаяр', 'үгүй'],
+   'select_constit': 'Энд заасан тойргийн дүнг сонирхох: ',
+   'select_all': 'Эсвэл нийт тойргийн дүнг сонирхох -> '
 }
 
 result_filename = 'result.json'
@@ -134,8 +136,8 @@ def poll():
 
     return render_template('thankyou.html', data=result_data)
 
-@app.route('/results')
-def show_results():
+@app.route('/poll_result')
+def show_poll_result():
     # get results
     results = {}    
     with open(result_filename, 'r') as f:
@@ -148,8 +150,8 @@ def show_results():
 
     return render_template('results.html', data=results_data, candidates=all_candidates)
 
-@app.route('/results_constit')
-def show_constituency_results():
+@app.route('/poll_result_by_constit')
+def show_poll_result_by_constituency():
     # get a constituency from HTTP request
     constituency = request.args['constituency']
     
@@ -187,6 +189,31 @@ def show_result_2020():
 
     # render HTML
     return render_template('result_2020.html', data=results_data, candidates=all_candidates)
+
+@app.route('/result_2020_by_constit')
+def show_result_2020_by_constituency():
+    # get a constituency from HTTP request
+    constituency = request.args['constituency']
+
+    # get all results
+    results = {}
+    with open(result_2020_filename, 'r') as f:
+        results = json.load(f)
+
+    # get election result of a chosen constituency
+    results_data = {}
+    results_data['title'] = poll_data['title']
+    results_data['votes'] = {}
+    results_data['votes'][constituency] = results[constituency]
+
+    # get candidates of a chosen constituency
+    constit_data = {}
+    constit_data[constituency] = {}
+    constit_data[constituency]['province'] = all_candidates[constituency]['province']
+    constit_data[constituency]['mandates'] = all_candidates[constituency]['mandates']
+    constit_data[constituency]['candidates'] = all_candidates[constituency]['candidates']
+
+    return render_template('result_2020.html', data=results_data, candidates=constit_data)
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -5,6 +5,7 @@
 </head>
 <body>
 <h1>{{ data.title }}</h1>
+<h2>Судалгаанд оролцох</h2>
 <form action="/hello">
   <label for="username">Таны нэр: </label>
   <input type="text" id="username" name="username"><br>
@@ -17,12 +18,40 @@
   <input type="submit" value="Нэвтрэх" />
 </form>
 <br>
-<form action="/results">
-  <label for="results_constit">Саналаа өгмөөргүй байна, харин асуулгын дүнг сонирхоё -> </label>
+
+<h2>Санал асуулгын дүнг сонирхох</h2>
+<form action="/poll_result_by_constit">
+  <!-- /result_chosen_constit?constituency=1 -->
+  <label for="constituency">{{ data.select_constit }}</label>
+  <select id="constituency" name="constituency">
+  {% for e in data.constituencies %}
+     <option value="{{e.number}}"> {{ e.number }} - {{ e.province }} </option>
+  {% endfor %}
+  </select>
   <input type="submit" value="энд дар" />
 </form>
+<br>
+<form action="/poll_result">
+  <label for="results_constit">{{ data.select_all }}</label>
+  <input type="submit" value="энд дар" />
+</form>
+<br>
+
+<h2>"Сонгууль 2020" албан ёсны дүнг сонирхох</h2>
+<form action="/result_2020_by_constit">
+  <!-- /result_chosen_constit?constituency=1 -->
+  <label for="constituency">{{ data.select_constit }}</label>
+  <select id="constituency" name="constituency">
+  {% for e in data.constituencies %}
+     <option value="{{e.number}}"> {{ e.number }} - {{ e.province }} </option>
+  {% endfor %}
+  </select>
+  <input type="submit" value="энд дар" />
+</form>
+<br>
+
 <form action="/result_2020">
-  <label for="result_2020">Бүх тойргийн албаны дүнг сонирхоё -> </label>
+  <label for="result_2020">{{ data.select_all }}</label>
   <input type="submit" value="энд дар" />
 </form>
 </body>
