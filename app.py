@@ -73,7 +73,7 @@ def election2020():
 
     poll_data['constituencies'] = constituencies
 
-    return render_template('hello.html', data=poll_data)
+    return render_template('election2020.html', data=poll_data)
 
 @app.route('/hello')
 def hello():
