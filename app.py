@@ -1,8 +1,10 @@
 # app.py
 # python 3.8
 
-# http://kaffeine.herokuapp.com/ - gives my app a caffeine shot every 30 minutes
-# https://medium.com/@morgannewman/how-to-keep-your-free-heroku-app-online-forever-4093ef69d7f5
+# Commands used to test this app on the devel host:
+# $ cd ~/venv/
+# $ . .venv/bin/activate
+# $ flask --app app run
 
 from flask import Flask, render_template, request
 import os, json
