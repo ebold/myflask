@@ -1,0 +1,72 @@
+body {
+    background-color: #002b36; /* Solarized base03 */
+    color: #839496; /* Solarized base01 */
+}
+
+header {
+    background-color: #073642; /* Solarized base02 */
+}
+
+footer {
+    background-color: #073642; /* Solarized base02 */
+}
+
+section {
+    background-color: #002b36; /* Solarized base03 */
+    border: 1px solid #586e75; /* Solarized base01 */
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+a {
+    color: #268bd2; /* Solarized blue */
+}
+
+a:hover {
+    color: #2aa198; /* Solarized cyan */
+}
+
+pre {
+    background-color: #002b36; /* Solarized base03 */
+    color: #839496; /* Solarized base01 */
+    border: 1px solid #586e75; /* Solarized base01 */
+    border-radius: 5px;
+    padding: 10px;
+    overflow-x: auto; /* Enable horizontal scrollbar if needed */
+}
+
+code {
+    color: #839496; /* Solarized base01 */
+}
+
+.bg-dark {
+    background-color: #073642 !important; /* Solarized base02 */
+}
+
+select {
+    margin: 5px;
+    background: #002b36; /* Solarized base03 */
+    color: #839496; /* Solarized base01 */
+}
+
+input[type=text] {
+    background: #93a1a1; /* Solarized base1 */
+    padding:5px;
+    border:1px solid #586e75; /* Solarized base01 */
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+input[type=text]:focus {
+    border-color:#333;
+}
+
+input[type=submit] {
+    padding:5px 15px;
+    background: #268bd2; /* Solarized blue */
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
