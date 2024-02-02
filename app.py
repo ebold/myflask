@@ -13,7 +13,8 @@ poll_data = {
    'question' : 'Та сонголтоо хийнэ үү?',
    'fields'   : ['С.Баяр', 'Х.Номтойбаяр', 'Н.Энхбаяр', 'Б.Эрдэнэбаяр', 'үгүй'],
    'select_constit': 'Энд заасан тойргийн дүнг сонирхох: ',
-   'select_all': 'Эсвэл нийт тойргийн дүнг сонирхох -> '
+   'select_all': 'Эсвэл нийт тойргийн дүнг сонирхох -> ',
+   'home': 'Үндсэн хуудас уруу буцах'
 }
 
 result_filename = 'result.json'
@@ -59,7 +60,11 @@ with open(list_filename, 'r') as f:
     f.write(json.dumps(results))'''
 
 @app.route('/')
-def root():
+def home():
+    return render_template('index.html')
+
+@app.route('/election2020')
+def election2020():
         
     constituencies = []
     for i in all_candidates:
