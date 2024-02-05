@@ -19,6 +19,17 @@ poll_data = {
    'home': 'Үндсэн хуудас уруу буцах'
 }
 
+tsagaan_sar_data = {
+    'title' : 'Найман хөлөл',
+    'header' : 'Найман хөлөлийн суудал, мөр зүг',
+    'action' : 'Нас, хүйсээ доорх нүдэнд оруулж, "илгээх" товчийг товшино уу.',
+    'age_text' : 'Нас (хий настай):',
+    'gender_text' : 'Хүйс:',
+    'female' : 'эмэгтэй',
+    'male' : 'эрэгтэй',
+    'submit_text' : 'илгээх'
+}
+
 result_filename = 'result.json'
 list_filename = 'list.json'
 result_2020_filename = 'result_2020.json'
@@ -221,6 +232,11 @@ def show_result_2020_by_constituency():
     constit_data[constituency]['candidates'] = all_candidates[constituency]['candidates']
 
     return render_template('result_2020.html', data=results_data, candidates=constit_data)
+
+@app.route('/tsagaan_sar')
+def tsagaan_sar():
+
+    return render_template('tsagaan_sar.html', data=tsagaan_sar_data)
 
 if __name__ == "__main__":
     app.run(debug=True)

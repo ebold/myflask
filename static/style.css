@@ -50,6 +50,14 @@ select {
     color: #839496; /* Solarized base01 */
 }
 
+input[type=number] {
+    background: #93a1a1; /* Solarized base1 */
+}
+
+input[type=radio] {
+    background: #93a1a1; /* Solarized base1 */
+}
+
 input[type=text] {
     background: #93a1a1; /* Solarized base1 */
     padding:5px;
