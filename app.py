@@ -19,12 +19,15 @@ poll_data = {
    'home': 'Үндсэн хуудас уруу буцах'
 }
 
+# election 2020
 result_filename = 'result.json'
 list_filename = 'list.json'
 result_2020_filename = 'result_2020.json'
 all_candidates = {}
 
-tsagaan_sar_filename = "tsagaan_sar.json"
+# tsagaan sar
+tsagaan_sar_filename = 'tsagaan_sar.json'
+seat_filename = 'seats.json'
 
 '''
     list.json
@@ -230,7 +233,38 @@ def tsagaan_sar():
     with open(tsagaan_sar_filename, 'r') as f:
         data = json.load(f)
 
-    return render_template('tsagaan_sar.html', data=data)
+    return render_template('tsagaan_sar.html', data=data, seat={})
+
+@app.route('/find_seat')
+def find_seat():
+
+    # age (must be non-zero) - hii nasiig tootsno
+    # gender - eregtei bol 'gal' -s ehlen nar zov toiruulan toolno,
+    #        - emegtei bol 'us' -s ehlen nar buruu toiruulan toolj suudliig olno
+
+    age = int(request.args['age'])
+    gender = request.args['gender']
+
+    # get all seats
+    with open(seat_filename, 'r') as f:
+        seats = json.load(f)
+        n_seats = seats["n_seats"]
+        idx_water = n_seats / 2
+
+    # calculate seat index
+    idx = (age - 1) % n_seats
+
+    # handling for female
+    if (gender == "female"):
+        idx = (idx + idx_water) % n_seats - idx
+
+    seat = seats[str(idx)]
+
+    # get text for HTML
+    with open(tsagaan_sar_filename, 'r') as f:
+        data = json.load(f)
+
+    return render_template('tsagaan_sar.html', data=data, seat=seat)
 
 if __name__ == "__main__":
     app.run(debug=True)
