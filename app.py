@@ -288,7 +288,7 @@ def find_seat():
 def make_route(seat, directions):
     # compose a route
 
-    route_text = "Мөр гаргах: Шинийн нэгний өглөө " + directions[seat["outgoing"]] + " зүгт гарч, "
+    route_text = "Аг тарнийн арга: Шинийн нэгний өглөө " + directions[seat["outgoing"]] + " зүгт гарч, "
     route_text += "хөллийн засал болгон сууж буй хөллийн махбодын дайсан болох " + seat["opposite"] + "-д "
     route_text += "'" + seat["mantra"] + "' тарнийг уриж, " + directions[seat["way"]["4"]] + " зүгт цацаж, "
     route_text += directions[seat["way"]["1"]] + " зүгээс ирнэ."
