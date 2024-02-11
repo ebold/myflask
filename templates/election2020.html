@@ -56,8 +56,11 @@
   <label for="result_2020">{{ data.select_all }}</label>
   <input type="submit" value="энд дар" />
 </form>
+<br>
 
-<p><a href="{{ url_for('home') }}"> {{ data.home }}</a></p>
+<form action="/">
+  <input type="submit" value="{{ data.home}}"/>
+</form>
 
 </body>
 </html>
