@@ -47,7 +47,13 @@
             <div class="col-md-6">
                 <section>
                     <h3>{{ data.description }}</h3>
-                    <p>{{ data.full_text }}</p>
+                    <p>{{ route.overview_text }}</p>
+                    {% for parag in route.paragraphs %}
+                    <p>{{ parag }}</p>
+                    {% endfor %}
+                    <form action="/">
+                        <input type="submit" value="{{ data.home}}"/>
+                    </form>
                 </section>
             </div>
         </div>

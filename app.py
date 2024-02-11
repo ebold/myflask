@@ -27,7 +27,7 @@ all_candidates = {}
 
 # tsagaan sar
 tsagaan_sar_filename = 'tsagaan_sar.json'
-seat_filename = 'seats.json'
+wheel_filename = 'wheel.json'
 
 '''
     list.json
@@ -233,7 +233,10 @@ def tsagaan_sar():
     with open(tsagaan_sar_filename, 'r') as f:
         data = json.load(f)
 
-    return render_template('tsagaan_sar.html', data=data, seat={})
+    route = {}
+    route["overview_text"] = data["overview_text"]
+
+    return render_template('tsagaan_sar.html', data=data, route=route)
 
 @app.route('/find_seat')
 def find_seat():
@@ -246,7 +249,7 @@ def find_seat():
     gender = request.args['gender']
 
     # get all seats
-    with open(seat_filename, 'r') as f:
+    with open(wheel_filename, 'r') as f:
         seats = json.load(f)
         n_seats = seats["n_seats"]
         idx_water = n_seats / 2
@@ -257,14 +260,40 @@ def find_seat():
     # handling for female
     if (gender == "female"):
         idx = (idx + idx_water) % n_seats - idx
+        idx = int(idx)
 
-    seat = seats[str(idx)]
+    seat = seats["seats"][str(idx)]    # user's seat info
+    directions = seats["directions"]
+
+    # TODO: consider 'black_dog_mouth' for the route
+    seat["outgoing"] = seat["way"]["0"]
 
     # get text for HTML
     with open(tsagaan_sar_filename, 'r') as f:
         data = json.load(f)
 
-    return render_template('tsagaan_sar.html', data=data, seat=seat)
+    # workaround to display user info and route procedure separetely in HTML (as paragraphs)
+    paragraphs =  "Суудал: " + seat["desc"] + ", нас: " + str(age) + ", хүйс: " + data[gender] # user info
+    paragraphs += '\n'
+    paragraphs += make_route(seat, directions) # route procedure
+
+    paragraphs = paragraphs.split('\n')  # make array by splitting
+
+    # build a final route text
+    route = {}
+    route["paragraphs"] = paragraphs
+
+    return render_template('tsagaan_sar.html', data=data, route=route)
+
+def make_route(seat, directions):
+    # compose a route
+
+    route_text = "Мөр гаргах: Шинийн нэгний өглөө " + directions[seat["outgoing"]] + " зүгт гарч, "
+    route_text += "хөллийн засал болгон сууж буй хөллийн махбодын дайсан болох " + seat["opposite"] + "-д "
+    route_text += "'" + seat["mantra"] + "' тарнийг уриж, " + directions[seat["way"]["4"]] + " зүгт цацаж, "
+    route_text += directions[seat["way"]["1"]] + " зүгээс ирнэ."
+
+    return route_text
 
 if __name__ == "__main__":
     app.run(debug=True)
