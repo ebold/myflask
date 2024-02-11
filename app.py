@@ -238,15 +238,15 @@ def tsagaan_sar():
 
     return render_template('tsagaan_sar.html', data=data, route=route)
 
-@app.route('/find_seat')
+@app.route('/find_seat', methods=['POST'])
 def find_seat():
 
     # age (must be non-zero) - hii nasiig tootsno
     # gender - eregtei bol 'gal' -s ehlen nar zov toiruulan toolno,
     #        - emegtei bol 'us' -s ehlen nar buruu toiruulan toolj suudliig olno
 
-    age = int(request.args['age'])
-    gender = request.args['gender']
+    age = int(request.form['age'])
+    gender = request.form['gender']
 
     # get all seats
     with open(wheel_filename, 'r') as f:
