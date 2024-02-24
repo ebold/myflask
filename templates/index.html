@@ -23,17 +23,27 @@
             <div class="col-md-6">
                 <section>
                     <h2>About: Энэ сайтын талаар</h2>
-                    <p>Туршилтын вэб сайт. Баруун талын 'Ажлууд' цэсэнд хувийн ажлын жагсаалтыг багтаав.</p>
+                    <p>Туршилтын вэб сайт. 'Ажлууд' цэсэнд хувийн зарим ажлыг багтаав.</p>
                 </section>
             </div>
             <div class="col-md-6">
                 <section>
                     <h2>Projects: Ажлууд</h2>
                     <ul>
-                        <li><a href="{{ url_for('election2020') }}">УИХ сонгууль 2020</a></li>
-                        <li><a href="{{ url_for('tsagaan_sar') }}">Цагаан сар</a></li>
-                        <li>Бага чадлын вэб сервер</li>
-                        <li><a href="https://github.com/ebold/myflask/">Энэ сайтын эх код</a></li>
+                        <li>Цагаан сар</a></li>
+                        <ul>
+                            <li><a href="{{ url_for('tsagaan_sar') }}">Мөр гаргах</a></li>
+                            <li><a href="https://www.math.mcgill.ca/gantumur/cal/year.html">Билгийн тооллын цагалбар (Гантөмөрийн ажил)</a></li>
+                        </ul>
+                        <li>УИХ сонгууль</a></li>
+                        <ul>
+                            <li><a href="{{ url_for('election2020') }}">2020 оны сонгууль</a></li>
+                        </ul>
+                        <li>Гар доорх эмбэддэд систем</li>
+                        <ul>
+                            <li>Бага чадлын вэб сервер</li>
+                            <li><a href="https://github.com/ebold/myflask/">Энэ сайтын эх код</a></li>
+                        </ul>
                         <li>Бусад</li>
                     </ul>
                 </section>
