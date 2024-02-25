@@ -204,18 +204,45 @@
     },
 
     "black_dog_mouth" : {
-        "hulgana": "n",
-        "uher": "n-e",
-        "bar": "e",
-        "tuulai": "e",
-        "luu": "s-e",
-        "mogoi": "s",
-        "mori": "s",
-        "honi": "s-w",
-        "bich": "w",
-        "tahia": "w",
-        "nohoi": "n-w",
-        "gahai": "n"
+        "temee" : {
+            "name":"тооцохгүй",
+            "dir": ""},
+        "hulgana": {
+            "name": "хулгана",
+            "dir": "n"},
+        "uher": {
+            "name": "үхэр",
+            "dir": "n-e"},
+        "bar": {
+            "name": "бар",
+            "dir": "e"},
+        "tuulai": {
+            "name": "туулай",
+            "dir": "e"},
+        "luu": {
+            "name": "луу",
+            "dir": "s-e"},
+        "mogoi": {
+            "name": "могой",
+            "dir": "s"},
+        "mori": {
+            "name": "морь",
+            "dir": "s"},
+        "honi": {
+            "name": "хонь",
+            "dir": "s-w"},
+        "bich": {
+            "name": "бич",
+            "dir": "w"},
+        "tahia": {
+            "name": "тахиа",
+            "dir": "w"},
+        "nohoi": {
+            "name": "нохой",
+            "dir": "n-w"},
+        "gahai": {
+            "name": "гахай",
+            "dir": "n"}
     },
 
     "links" : {

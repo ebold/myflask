@@ -24,10 +24,18 @@
                     <h3>{{ data.sub_header }}</h3>
                     <form action="/find_seat" method="post">
                         <p>{{ data.instr_text }}</p>
+                        <label for="year">{{ data.year_text }}</label>
+                        <!-- Select options -->
+                        <select id="year" name="year">
+                            {% for e in data.bdm %}
+                                <option value="{{e.year}}"> {{ e.name }} </option>
+                            {% endfor %}
+                        </select>
+                        <br>
+
                         <label for="age">{{ data.age_text }}</label>
                         <!-- Input field for unsigned integers -->
                         <input type="number" id="age" name="age" min="1" required>
-
                         <br>
 
                         <label>{{ data.gender_text }}</label>

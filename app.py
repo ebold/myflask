@@ -230,8 +230,19 @@ def show_result_2020_by_constituency():
 @app.route('/tsagaan_sar')
 def tsagaan_sar():
 
+    # TODO: re-factor duplicate code in tsagaan_sar() & find_seat()
     with open(tsagaan_sar_filename, 'r') as f:
         data = json.load(f)
+
+    # black dog mouth
+    bdm = []
+    with open(wheel_filename, 'r') as f:
+        bdm_data = json.load(f)["black_dog_mouth"]
+        for i in bdm_data:
+            c = {"year" : i, "name": bdm_data[i]["name"]}
+            bdm.append(c)
+
+    data["bdm"] = bdm
 
     route = {}
     route["overview_text"] = data["overview_text"]
@@ -244,14 +255,16 @@ def find_seat():
     # age (must be non-zero) - hii nasiig tootsno
     # gender - eregtei bol 'gal' -s ehlen nar zov toiruulan toolno,
     #        - emegtei bol 'us' -s ehlen nar buruu toiruulan toolj suudliig olno
+    # bdm - har nohoin am (black dog mouth)
 
     age = int(request.form['age'])
     gender = request.form['gender']
+    year = request.form['year']
 
     # get all seats
     with open(wheel_filename, 'r') as f:
-        seats = json.load(f)
-        n_seats = seats["n_seats"]
+        wheel = json.load(f)
+        n_seats = wheel["n_seats"]
         idx_water = n_seats / 2
 
     # calculate seat index
@@ -262,11 +275,17 @@ def find_seat():
         idx = (idx + idx_water) % n_seats - idx
         idx = int(idx)
 
-    seat = seats["seats"][str(idx)]    # user's seat info
-    directions = seats["directions"]
+    seat = wheel["seats"][str(idx)]    # user's seat info
+    directions = wheel["directions"]
 
-    # TODO: consider 'black_dog_mouth' for the route
-    seat["outgoing"] = seat["way"]["0"]
+    # outgoing direction
+    seat["outgoing"] = seat["way"]["0"]  # main outgoing direction
+    bdm_year = wheel["black_dog_mouth"][year]
+
+    # consider 'black_dog_mouth' direction
+    if bdm_year["dir"] != "":
+        if bdm_year["dir"] == seat["way"]["0"]:
+            seat["outgoing"] = seat["way"]["3"]  # get alternate outgoing direction
 
     # get text for HTML
     with open(tsagaan_sar_filename, 'r') as f:
@@ -275,7 +294,7 @@ def find_seat():
     # workaround to display user info and route procedure separetely in HTML (as paragraphs)
     paragraphs =  "Суудал: " + seat["desc"] + ", нас: " + str(age) + ", хүйс: " + data[gender] # user info
     paragraphs += '\n'
-    paragraphs += make_route(seat, directions) # route procedure
+    paragraphs += make_route(seat, directions, bdm_year) # route procedure
 
     paragraphs = paragraphs.split('\n')  # make array by splitting
 
@@ -283,15 +302,32 @@ def find_seat():
     route = {}
     route["paragraphs"] = paragraphs
 
+    # black dog mouth
+    bdm = []
+    with open(wheel_filename, 'r') as f:
+        bdm_data = json.load(f)["black_dog_mouth"]
+        for i in bdm_data:
+            c = {"year" : i, "name": bdm_data[i]["name"]}
+            bdm.append(c)
+
+    data["bdm"] = bdm
+
     return render_template('tsagaan_sar.html', data=data, route=route)
 
-def make_route(seat, directions):
+def make_route(seat, directions, bdm_year):
     # compose a route
 
-    route_text = "Аг тарнийн арга: Шинийн нэгний өглөө " + directions[seat["outgoing"]] + " зүгт гарч, "
+    route_text = "Аг тарнийн арга: Шинийн нэгний өглөө '" + directions[seat["outgoing"]] + "' зүгт гарч, "
     route_text += "хөллийн засал болгон сууж буй хөллийн махбодын дайсан болох " + seat["opposite"] + "-д "
-    route_text += "'" + seat["mantra"] + "' тарнийг уриж, " + directions[seat["way"]["4"]] + " зүгт цацаж, "
-    route_text += directions[seat["way"]["1"]] + " зүгээс ирнэ."
+    route_text += "'" + seat["mantra"] + "' тарнийг уриж, '" + directions[seat["way"]["4"]] + "' зүгт цацаж, '"
+    route_text += directions[seat["way"]["1"]] + "' зүгээс ирнэ."
+
+    route_text += "\nХар нохойн амны зүг: "
+
+    if bdm_year["dir"] != "":
+        route_text += directions[bdm_year["dir"]] + ", билгийн жил: " + bdm_year["name"]
+    else:
+        route_text += "тооцоогүй."
 
     return route_text
 
