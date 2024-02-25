@@ -23,6 +23,7 @@
                 <section>
                     <h3>{{ data.sub_header }}</h3>
                     <form action="/find_seat" method="post">
+                        <p>{{ data.instr_text }}</p>
                         <label for="age">{{ data.age_text }}</label>
                         <!-- Input field for unsigned integers -->
                         <input type="number" id="age" name="age" min="1" required>
